@@ -1,0 +1,46 @@
+#encoding UTF-8
+        var R;
+        window.onload = function () {
+            R = Raphael("paper", 300, 300);
+            var attr = {
+                fill: "#BEC1C3",
+                stroke: "#666",
+                "stroke-width": 1,
+                "stroke-linejoin": "round"
+            };
+
+
+            var france = {};
+
+#for $line in $data
+            france.$line['nom_dept'].replace("-","").replace("'","") = R.path("$line['svg']").attr(attr);
+#end for
+
+            var current = null;
+            for (var dept in france) {
+                france[dept].color = Raphael.getColor();
+                (function (st, dept) {
+                    st[0].style.cursor = "pointer";
+                    st[0].onmouseover = function () {
+                        current && france[current].animate({fill: "#BEC1C3", stroke: "#666"}, 500) && (document.getElementById(current).style.display = "");
+                        st.animate({fill: st.color, stroke: "#ccc"}, 500);
+                        st.toFront();
+                        R.safari();
+                        document.getElementById(dept).style.display = "block";
+                        current = dept;
+                    };
+                    st[0].onmouseout = function () {
+                        st.animate({fill: "#BEC1C3", stroke: "#666"}, 500);
+                        st.toBack();
+                        R.safari();
+                    };
+                    if (dept == "ain") {
+                        st[0].onmouseover();
+                    }
+                })(france[dept], dept);
+            }
+#for $letter in $letters
+            R.path("$letter['path']").translate($letter['x'], $letter['y']);
+#end for
+        };
+

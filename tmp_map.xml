@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map srs="+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" background-color="rgb(70,130,180)">
+    <Style name="My Style">
+        <Rule>
+            <Filter>([pop2009]&gt;1600000)</Filter>
+            <PolygonSymbolizer fill="rgb(255,255,0)"/>
+        </Rule>
+        <Rule>
+            <Filter>([pop2009]&lt;1600000)</Filter>
+            <PolygonSymbolizer fill="rgb(255,0,0)"/>
+        </Rule>
+    </Style>
+    <Style name="Text">
+        <Rule>
+            <Filter>(((([code_dept]!=&apos;75&apos;) and ([code_dept]!=&apos;92&apos;)) and ([code_dept]!=&apos;93&apos;)) and ([code_dept]!=&apos;94&apos;))</Filter>
+            <TextSymbolizer face-name="DejaVu Sans Book" size="8" fill="rgb(0,0,0)" allow-overlap="true">[code_dept]</TextSymbolizer>
+        </Rule>
+    </Style>
+    <Layer name="france" srs="+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs">
+        <StyleName>My Style</StyleName>
+        <StyleName>Text</StyleName>
+        <Datasource>
+            <Parameter name="base">/home/thomas/git/autotestraphael</Parameter>
+            <Parameter name="extent">99226.000000,6049647.000000,1242375.000000,7110524.000000</Parameter>
+            <Parameter name="file">france.sqlite</Parameter>
+            <Parameter name="geometry_field">Geometry</Parameter>
+            <Parameter name="key_field">pkuid</Parameter>
+            <Parameter name="table">departements</Parameter>
+            <Parameter name="type">sqlite</Parameter>
+            <Parameter name="wkb_format">spatialite</Parameter>
+        </Datasource>
+    </Layer>
+</Map>
