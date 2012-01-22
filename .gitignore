@@ -1,0 +1,11 @@
+.git/*
+*.html
+*.pyc
+departement.*
+fig*.png
+limite_departement.*
+*.zip
+france.sqlite
+*.svg
+*.html
+*.index
