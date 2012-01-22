@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 
 import cairo
 from mapnik import Style, Rule, Color, Filter, LineSymbolizer, PolygonSymbolizer, TextSymbolizer, label_placement, SQLite, Layer, Map, render, Shapefile, Expression, save_map
@@ -51,7 +52,7 @@ m.append_style('My Style', s)
 
 lyr = Layer('france', proj4)
 import os
-lyr.datasource = SQLite(base=os.getcwd(), file = 'france.sqlite', table = 'departements', geometry_field = 'Geometry', key_field = 'pkuid', extent = '99226.000000,6049647.000000,1242375.000000,7110524.000000', wkb_format = 'spatialite')
+lyr.datasource = SQLite(base=os.getcwd(), file = sqlitedatabase, table = tablename, geometry_field = 'Geometry', key_field = 'pkuid', extent = '99226.000000,6049647.000000,1242375.000000,7110524.000000', wkb_format = 'spatialite')
 
 """
 roads2_lyr = mapnik.Layer('Roads')

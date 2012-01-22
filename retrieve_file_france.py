@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import variables_config # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
+from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 from download_and_zip import * # generic module for downloading and unzipping files and dir
 
 # Download ZIP
 import urllib
 
-url = variables_config.data_url
-file_name = url.split('/')[-1]
-download_file(url, file_name)
+file_name = data_url.split('/')[-1]
+download_file(data_url, file_name)
 
 # Extract ZIP
 extract(file_name, ".")

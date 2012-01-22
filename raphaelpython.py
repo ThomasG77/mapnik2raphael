@@ -13,6 +13,9 @@ import depts_wikipedia
 # Retrieve pop 2009 from INSEE with web scrapping, write to CSV, import into database, join with spatial table departements
 import scrapping_insee_pop_2009
 
+# Import ino db and join
+import import_csv_pop_dept_2009
+
 # Calculate chloropleth class and do some histograms with matplotlib
 import spatialite_map_class_intervals
 
@@ -47,6 +50,7 @@ import generateRaphaelResult
 # TODO
 # Manage wrong letters for Ile de France (exclude some "departements" to replace with "Ile de France") - Play at Mapnik level and with wkt
 # Make a chloropleth map and retrieve color properties from generated SVG
+# or generate class in db and affect color in db, so no svg  parsing for color
 # Make auto BBOX, img size and geographic or graphic coordinates data using ogr / gdal
 # Make a model compliant to deal with time (will create dependencies to a js framework/lib for managing timeline)
 # Make no name appli (some constants like france or depts must be choose by user)

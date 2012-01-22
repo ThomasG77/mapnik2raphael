@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 # TODO : reorganise func below : duplicated from shp_import_and_structure_departements.py
-def table_isempty(table):
+def table_isempty(cur, table):
     cur.execute('SELECT * FROM ' + table)
     data = cur.fetchone()
     if data is None:
@@ -10,17 +10,10 @@ def table_isempty(table):
     else:
         return False
 
-
-from pyspatialite import dbapi2 as sqlite
-import variables_config # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
+from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
+cur = conn.cursor()
 import os
 from contextlib import closing
-
-tablename = variables_config.tablename
-sqlitedatabase = variables_config.sqlitedatabase
-
-conn = sqlite.connect(sqlitedatabase)
-cur = conn.cursor()
 
 with closing(cur):
     # Create table for importing csv
@@ -33,7 +26,7 @@ with closing(cur):
 
     # Populate table excluding first line (columns title)
     start = 0
-    table_empty = table_isempty('pop_dept')
+    table_empty = table_isempty(cur, 'pop_dept')
     for idDept, nomDept, pop2009Dept in reader:
         if start > 0 and table_empty:
             print idDept, nomDept, pop2009Dept

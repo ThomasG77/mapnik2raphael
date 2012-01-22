@@ -2,12 +2,8 @@
 <Map srs="+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" background-color="rgb(70,130,180)">
     <Style name="My Style">
         <Rule>
-            <Filter>([pop2009]&gt;1600000)</Filter>
-            <PolygonSymbolizer fill="rgb(255,255,0)"/>
-        </Rule>
-        <Rule>
-            <Filter>([pop2009]&lt;1600000)</Filter>
-            <PolygonSymbolizer fill="rgb(255,0,0)"/>
+            <PolygonSymbolizer fill="rgb(242,239,249)"/>
+            <LineSymbolizer stroke="rgb(128,128,128)" stroke-width="0.1000000014901161"/>
         </Rule>
     </Style>
     <Style name="Text">
