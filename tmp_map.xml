@@ -17,7 +17,7 @@
         <StyleName>Text</StyleName>
         <Datasource>
             <Parameter name="base">/home/thomas/git/autotestraphael</Parameter>
-            <Parameter name="extent">99226.000000,6049647.000000,1242375.000000,7110524.000000</Parameter>
+            <Parameter name="extent">99226.0,6049647.0,1242375.0,7110524.0</Parameter>
             <Parameter name="file">france.sqlite</Parameter>
             <Parameter name="geometry_field">Geometry</Parameter>
             <Parameter name="key_field">pkuid</Parameter>

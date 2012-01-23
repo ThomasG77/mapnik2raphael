@@ -1,4 +1,4 @@
-# This project depend from mapnik 2, spatialite, matplotlib and cheetah (for
+# This project depend from mapnik 2, spatialite, matplotlib, beautifulsoup and cheetah (for
 # this last one use https://github.com/cheetahtemplate/cheetah and not defaut
 # bundle)
 # It was tested with python 2.6 on Linux 10.04

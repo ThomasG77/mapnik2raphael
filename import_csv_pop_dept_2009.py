@@ -1,15 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# TODO : reorganise func below : duplicated from shp_import_and_structure_departements.py
-def table_isempty(cur, table):
-    cur.execute('SELECT * FROM ' + table)
-    data = cur.fetchone()
-    if data is None:
-        return True
-    else:
-        return False
-
+from common.spatialite_sqlite import *
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 cur = conn.cursor()
 import os
@@ -21,7 +13,7 @@ with closing(cur):
 
     import csv
     # Now import csv file content
-    f = open("pop_france_depts_2009.txt", "rb")
+    f = open(file_pop_csv, "rb")
     reader = csv.reader(f)
 
     # Populate table excluding first line (columns title)

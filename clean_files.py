@@ -3,8 +3,6 @@
 
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 
-patterns_list = ['*.pyc', 'departement.*', 'fig*.png', 'limite_departement.*', '*.zip', 'france.sqlite', '*.svg', '*.html', '*.index']
-
 def removeFilesCaseSensitive(patterns_list):
     files_list = []
     for f in [name for pattern in patterns_list for name in glob.glob(pattern)]:
@@ -54,6 +52,7 @@ for file in files_to_delete: os.remove(file)
 # delete dirs
 import shutil
 
-if os.path.isdir('scour/'):
-    shutil.rmtree('scour/')
+for dir in dirs_to_delete:
+    if os.path.isdir(dir):
+        shutil.rmtree(dir)
 

@@ -5,28 +5,6 @@ def rreplace(s, old, new, occurrence):
     li = s.rsplit(old, occurrence)
     return new.join(li)
 
-def urllibopenwithheaders(url, header = False):
-    """
-    Function to add headers to urllib2 or it fails for wikipedia (403 error)
-    and some others sites. Header option is to see header status if value = True
-    """
-    try:
-        user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
-        req = urllib2.Request(url, headers={'User-Agent' : user_agent})
-        page = urllib2.urlopen(req)
-        headers = page.info()
-        # Deal with gunzip content
-        if headers.getheader("Content-Encoding") == 'gzip':
-            buf = StringIO( page.read())
-            page = gzip.GzipFile(fileobj=buf)
-        if header: # Condition for headers
-            #import ipdb; ipdb.set_trace()
-            print headers
-        content = page.read()
-        return content
-    except urllib2.HTTPError, e:
-        print e.read()
-
 def describefrenchdepartement(url):
     """
     Function to retrieve simple description of the  metropolitan french
@@ -39,11 +17,7 @@ def describefrenchdepartement(url):
         { "class" : "infobox_v2" }).findNext('p')
     return str(descriptif_dept).replace("/wiki", "http://fr.wikipedia.org/wiki")
 
-import urllib2
-from BeautifulSoup import BeautifulSoup
-from StringIO import StringIO
-import gzip
-
+from common.urllib2_extended import *
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 cur = conn.cursor()
 from contextlib import closing

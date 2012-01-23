@@ -3,11 +3,16 @@
 
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 
+# get extent from shp (for mapnik)
+from common.ogr_extent import *
+
+print "SQLLite"
+shp_extent , proj4 = extent_and_proj("france.sqlite", sourcetype = 'SQLite')
+print shp_extent
+print proj4
+
 import cairo
 from mapnik import Style, Rule, Color, Filter, LineSymbolizer, PolygonSymbolizer, TextSymbolizer, label_placement, SQLite, Layer, Map, render, Shapefile, Expression, save_map
-
-# manage projection
-proj4 = '+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
 
 map_output = 'france'
 m = Map(300, 300, proj4)
@@ -35,7 +40,7 @@ m.append_style('My Style', s)
 
 lyr = Layer('france', proj4)
 import os
-lyr.datasource = SQLite(base=os.getcwd(), file = sqlitedatabase, table = tablename, geometry_field = 'Geometry', key_field = 'pkuid', extent = '99226.000000,6049647.000000,1242375.000000,7110524.000000', wkb_format = 'spatialite')
+lyr.datasource = SQLite(base=os.getcwd(), file = sqlitedatabase, table = tablename, geometry_field = 'Geometry', key_field = 'pkuid', extent = shp_extent, wkb_format = 'spatialite')
 
 lyr.styles.append('My Style')
 lyr.styles.append('Text')

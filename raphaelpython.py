@@ -47,6 +47,7 @@ import svg_parsing
 # Generate files for Raphael map final demo
 import generateRaphaelResult
 
+
 # TODO
 # Manage wrong letters for Ile de France (exclude some "departements" to replace with "Ile de France") - Play at Mapnik level and with wkt
 # Make a chloropleth map and retrieve color properties from generated SVG
@@ -64,8 +65,6 @@ import generateRaphaelResult
  </sup>
 """
 # Refactoring code to  a class sharing cur connexion with "init model"
-
-
 
 # Need to play with js_svg_anim.js for letters (wrong for the moment : use only one source for template)
 # OK, solved

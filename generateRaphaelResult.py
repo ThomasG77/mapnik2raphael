@@ -1,16 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-def showquery(cur, request):
-    cur.execute(request)
-    fieldnames = [name[0] for name in cur.description]
-    result = []
-    for row in cur.fetchall():
-        rowset = []
-        for field in zip(fieldnames, row):
-            rowset.append(field)
-        result.append(dict(rowset))
-    return result
+from common.spatialite_sqlite import *
 
 from download_and_zip import *
 url_raphael = "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js"
