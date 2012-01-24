@@ -6,10 +6,8 @@ from variables_config import * # Contains shared variables (See http://docs.pyth
 # get extent from shp (for mapnik)
 from common.ogr_extent import *
 
-print "SQLLite"
-shp_extent , proj4 = extent_and_proj("france.sqlite", sourcetype = 'SQLite')
-print shp_extent
-print proj4
+# Retrieve extent and projection using gdal
+shp_extent , proj4 = extent_and_proj(sqlitedatabase, sourcetype = 'SQLite')
 
 import cairo
 from mapnik import Style, Rule, Color, Filter, LineSymbolizer, PolygonSymbolizer, TextSymbolizer, label_placement, SQLite, Layer, Map, render, Shapefile, Expression, save_map
