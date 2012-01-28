@@ -9,12 +9,20 @@
                 "stroke-linejoin": "round"
             };
 
-
             var france = {};
 
-#for $line in $data
-            france.$line['nom_dept'].replace("-","").replace("'","") = R.path("$line['svg']").attr(attr);
+layeranalyse = [
+#for $line in $data[:-1:]
+            {"areaname": "$line['nom_dept'].replace("-","").replace("'","")", "svg": "$line['svg']"},
 #end for
+#for $line in $data[-1::1]
+            {"areaname": "$line['nom_dept'].replace("-","").replace("'","")", "svg": "$line['svg']"}
+#end for
+];
+
+for (i in layeranalyse){
+    france[layeranalyse[i].areaname] = R.path(layeranalyse[i].svg).attr(attr);
+}
 
             var current = null;
             for (var dept in france) {
@@ -39,8 +47,19 @@
                     }
                 })(france[dept], dept);
             }
-#for $letter in $letters
-            R.path("$letter['path']").translate($letter['x'], $letter['y']);
+
+letters = [
+#for $letter in $letters[:-1:]
+            {"svg":"$letter['path']", "x": $letter['x'], "y": $letter['y']},
 #end for
+#for $letter in $letters[-1::1]
+            {"svg":"$letter['path']", "x": $letter['x'], "y": $letter['y']}
+#end for
+];
+
+for (i in letters){
+    R.path(letters[i].svg).translate( letters[i].x, letters[i].y);
+}
+
         };
 

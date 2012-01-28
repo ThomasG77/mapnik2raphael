@@ -2,14 +2,34 @@
 <Map srs="+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs" background-color="rgb(70,130,180)">
     <Style name="My Style">
         <Rule>
-            <PolygonSymbolizer fill="rgb(242,239,249)"/>
-            <LineSymbolizer stroke="rgb(128,128,128)" stroke-width="0.1000000014901161"/>
+            <Filter>(([density2009]&lt;46.57) and ([density2009]&gt;=14.92))</Filter>
+            <PolygonSymbolizer fill="rgb(254,240,217)"/>
+        </Rule>
+        <Rule>
+            <Filter>(([density2009]&lt;73.73) and ([density2009]&gt;46.57))</Filter>
+            <PolygonSymbolizer fill="rgb(253,212,158)"/>
+        </Rule>
+        <Rule>
+            <Filter>(([density2009]&lt;121.47) and ([density2009]&gt;73.73))</Filter>
+            <PolygonSymbolizer fill="rgb(253,187,132)"/>
+        </Rule>
+        <Rule>
+            <Filter>(([density2009]&lt;251.19) and ([density2009]&gt;121.47))</Filter>
+            <PolygonSymbolizer fill="rgb(252,141,89)"/>
+        </Rule>
+        <Rule>
+            <Filter>(([density2009]&lt;932.9) and ([density2009]&gt;251.19))</Filter>
+            <PolygonSymbolizer fill="rgb(227,74,51)"/>
+        </Rule>
+        <Rule>
+            <Filter>(([density2009]&lt;=21208.39) and ([density2009]&gt;932.9))</Filter>
+            <PolygonSymbolizer fill="rgb(179,0,0)"/>
         </Rule>
     </Style>
     <Style name="Text">
         <Rule>
             <Filter>(((([code_dept]!=&apos;75&apos;) and ([code_dept]!=&apos;92&apos;)) and ([code_dept]!=&apos;93&apos;)) and ([code_dept]!=&apos;94&apos;))</Filter>
-            <TextSymbolizer face-name="DejaVu Sans Book" size="8" fill="rgb(0,0,0)" allow-overlap="true">[code_dept]</TextSymbolizer>
+            <TextSymbolizer face-name="Linux Libertine O Regular" size="8" fill="rgb(0,0,0)" allow-overlap="true">[code_dept]</TextSymbolizer>
         </Rule>
     </Style>
     <Layer name="france" srs="+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs">

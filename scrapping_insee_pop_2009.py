@@ -16,16 +16,16 @@ f = open(file_pop_csv, "wb")
 wr = csv.writer(f, quoting=csv.QUOTE_ALL)
 
 #Write columns
-wr.writerow(["idDept", "nomDept", "pop2009Dept"])
+wr.writerow(["idDept", "nomDept", "pop_2009_dept"])
 
 values = []
 for row in table_pop_2009_dept.findAll('tr')[1:]:
     cols = row.findAll('td')
     if len(cols) == 5 and cols[0].text != "" and len(cols[0].text) != 3:
-        idDept, nomDept, pop2009Dept = cols[0].text, cols[1].text, int(cols[2].text.replace(u"\xa0",""))
-        values.append(pop2009Dept)
-        print idDept, nomDept, pop2009Dept
-        wr.writerow([idDept, nomDept.encode("utf-8"), pop2009Dept])
+        idDept, nomDept, pop_2009_dept = cols[0].text, cols[1].text, int(cols[2].text.replace(u"\xa0",""))
+        values.append(pop_2009_dept)
+        print idDept, nomDept, pop_2009_dept
+        wr.writerow([idDept, nomDept.encode("utf-8"), pop_2009_dept])
 
 f.close()
 

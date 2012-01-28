@@ -9,7 +9,7 @@ from contextlib import closing
 
 with closing(cur):
     # Create table for importing csv
-    cur.execute('CREATE TABLE IF NOT EXISTS pop_dept(idDept TEXT, nomDept TEXT, pop2009Dept INTEGER, PRIMARY KEY(idDept));')
+    cur.execute('CREATE TABLE IF NOT EXISTS pop_dept(idDept TEXT, nomDept TEXT, pop_2009_dept INTEGER, PRIMARY KEY(idDept));')
 
     import csv
     # Now import csv file content
@@ -19,10 +19,10 @@ with closing(cur):
     # Populate table excluding first line (columns title)
     start = 0
     table_empty = table_isempty(cur, 'pop_dept')
-    for idDept, nomDept, pop2009Dept in reader:
+    for idDept, nomDept, pop_2009_dept in reader:
         if start > 0 and table_empty:
-            print idDept, nomDept, pop2009Dept
-            cur.execute('INSERT INTO pop_dept (idDept, nomDept, pop2009Dept) VALUES (?,?,?)', (idDept.decode("utf-8"), nomDept.decode("utf-8"), pop2009Dept.decode("utf-8")))
+            print idDept, nomDept, pop_2009_dept
+            cur.execute('INSERT INTO pop_dept (idDept, nomDept, pop_2009_dept) VALUES (?,?,?)', (idDept.decode("utf-8"), nomDept.decode("utf-8"), pop_2009_dept.decode("utf-8")))
             #import ipdb; ipdb.set_trace()
         start += 1
     conn.commit()
@@ -31,7 +31,10 @@ with closing(cur):
     try:
         cur.execute("ALTER TABLE " + tablename  + " ADD COLUMN pop2009 INTEGER")
         # Time to update main shp table
-        cur.execute('UPDATE ' + tablename + ' SET pop2009 = (SELECT pop2009Dept FROM pop_dept WHERE pop_dept.idDept = ' + tablename +'.code_dept)')
+        cur.execute('UPDATE ' + tablename + ' SET pop2009 = (SELECT pop_2009_dept FROM pop_dept WHERE pop_dept.idDept = ' + tablename +'.code_dept)')
+        # Add column and update it to get population density
+        cur.execute("ALTER TABLE " + tablename  + " ADD COLUMN density2009 INTEGER")
+        cur.execute('UPDATE ' + tablename + ' SET density2009 = "pop2009"/ (st_area("Geometry")/1000000)')
         conn.commit()
     except:
         print "Column already exist"

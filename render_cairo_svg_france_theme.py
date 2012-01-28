@@ -1,18 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
+
+# get extent from shp (for mapnik)
+from common.ogr_extent import *
+
+# Retrieve extent and projection using gdal
+shp_extent , proj4 = extent_and_proj(sqlitedatabase, sourcetype = 'SQLite')
+
 import cairo
 from mapnik import Style, Rule, Color, Filter, LineSymbolizer, PolygonSymbolizer, TextSymbolizer, label_placement, SQLite, Layer, Map, render, Shapefile, Expression, save_map
-
-# manage projection
-proj4 = '+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
 
 map_output = 'france'
 m = Map(300, 300, proj4)
 
 m.background = Color('steelblue')
 
-t = TextSymbolizer(Expression('[code_dept]'), 'DejaVu Sans Book', 8, Color('black'))
+t = TextSymbolizer(Expression('[code_dept]'), 'Linux Libertine O Regular', 8, Color('black'))
 
 f = Expression("[code_dept]<>'75' and [code_dept]<>'92' and [code_dept]<>'93' and [code_dept]<>'94'")
 t.allow_overlap = 1
@@ -44,48 +49,47 @@ def simple_polygon_style(fill_color = "#f2eff9"):
 
 #m.append_style('My Style', simple_polygon_style())
 
-s = basic_chloropleth_class(s, "[pop2009] > 1600000", color = Color(255, 255, 0))
-s = basic_chloropleth_class(s, "[pop2009] < 1600000", color = Color(255, 0, 0))
+
+#quantiletest = [77163.0, 246937.00000000006, 392518.00000000017, 605505.39999999991, 1072259.6000000003, 2571940]
+#quantiletest = [14.922755846451, 932.89906405113561, 6374.9274822841471, 8928.8564733596268, 21208.385122261425]
+quantiletest = [14.92, 46.57, 73.730000000000004, 121.47, 251.19, 932.89999999999998, 21208.389999999999]
+length = len(quantiletest)
+
+# Combine in list of list of 2 elements (min, max)
+sequencepair = [quantiletest[index: index + 2:] for index, item in enumerate(quantiletest) if (index <= len(quantiletest) - 2)]
+len_seq = len(sequencepair)
+
+import colorbrewer
+from color_brewer_test import *
+
+color_obj = colorbrewer.OrRd[len_seq]
+
+# Add color to get a list of list of 3 elements (min, max and RGB color list )
+for index, seq  in enumerate(sequencepair):
+    seq.append(color_obj[index])
+
+
+# From classification and color, make layers
+for index,seq in enumerate(sequencepair):
+    if index == 0:
+        exp = "[" + col_analyse + "] < " + str(seq[1]) + " and [" + col_analyse + "] >= " + str(seq[0])
+    elif index == len_seq -1 :
+        exp = "[" + col_analyse + "] <= " + str(seq[1]) + " and [" + col_analyse + "] > " + str(seq[0])
+    else:
+        exp = "[" + col_analyse + "] < " + str(seq[1]) + " and [" + col_analyse + "] > " + str(seq[0])
+    s = basic_chloropleth_class(s, exp, color = Color(seq[2][0], seq[2][1], seq[2][2]))
 
 m.append_style('My Style', s)
 
-
 lyr = Layer('france', proj4)
 import os
-lyr.datasource = SQLite(base=os.getcwd(), file = sqlitedatabase, table = tablename, geometry_field = 'Geometry', key_field = 'pkuid', extent = '99226.000000,6049647.000000,1242375.000000,7110524.000000', wkb_format = 'spatialite')
+lyr.datasource = SQLite(base=os.getcwd(), file = sqlitedatabase, table = tablename, geometry_field = 'Geometry', key_field = 'pkuid', extent = shp_extent, wkb_format = 'spatialite')
 
-"""
-roads2_lyr = mapnik.Layer('Roads')
-roads2_lyr.srs = "+proj=lcc +ellps=GRS80 +lat_0=49 +lon_0=-95 +lat+1=49 +lat_2=77 +datum=NAD83 +units=m +no_defs"
-# Just get a copy from roads34_lyr
-roads2_lyr.datasource = roads34_lyr.datasource
-
-roads2_style_1 = mapnik.Style()
-roads2_rule_1 = mapnik.Rule()
-roads2_rule_1.filter = mapnik.Expression('[CLASS] = 2')
-roads2_rule_stk_1 = mapnik.Stroke()
-roads2_rule_stk_1.color = mapnik.Color(171,158,137)
-roads2_rule_stk_1.line_cap = mapnik.line_cap.ROUND_CAP
-roads2_rule_stk_1.width = 4.0
-roads2_rule_1.symbols.append(mapnik.LineSymbolizer(roads2_rule_stk_1))
-roads2_style_1.rules.append(roads2_rule_1)
-
-m.append_style('road-border', roads2_style_1)
-
-roads2_style_2 = mapnik.Style()
-roads2_rule_2 = mapnik.Rule()
-roads2_rule_2.filter = mapnik.Expression('[CLASS] = 2')
-roads2_rule_stk_2 = mapnik.Stroke()
-roads2_rule_stk_2.color = mapnik.Color(255,250,115)
-"""
-
-#lyr.datasource = Shapefile(file='departement')
 lyr.styles.append('My Style')
 lyr.styles.append('Text')
 
 m.layers.append(lyr)
 m.zoom_to_box(lyr.envelope())
-#m.zoom(.2)
 
 
 

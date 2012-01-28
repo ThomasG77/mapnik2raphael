@@ -6,7 +6,7 @@ cur = conn.cursor()
 
 with closing(cur):
     print tablename
-    cur.execute('SELECT pop2009 FROM "' + tablename + '"')
+    cur.execute('SELECT ' + col_analyse + ' FROM "' + tablename + '"')
 
 
     values = []
@@ -14,12 +14,16 @@ with closing(cur):
         #print series[0]
         values.append(series[0])
 
-print values
+#print values
 
 # For maps discretisation
+
+
 from class_intervals import quantile, equal, pretty, std_dev, jenks
 
-quantile, equal_interval, r_pretty, std_dev, jenks = quantile(values, 5), equal(values, 5), pretty(values, 5), std_dev(values, 5), jenks(values, classes=5)
+class_number = 4
+quantile, equal_interval, r_pretty, std_dev, jenks = quantile(values, class_number), equal(values, class_number), pretty(values, class_number), std_dev(values, class_number), jenks(values, classes=class_number)
+
 
 print "Equal Interval: ", equal_interval, len(equal_interval) - 1
 print "Quantile: ", quantile, len(quantile) - 1
@@ -28,6 +32,71 @@ print "R's Pretty: ", r_pretty, len(r_pretty) - 1
 print "Standard Deviation: ", std_dev, len(std_dev) - 1
 
 
+import numpy as np
+import pysal
+
+# Sort values
+values.sort()
+x = np.array(values)
+
+#import ipdb; ipdb.set_trace()
+
+
+
+
+#intermediate_classification = pysal.esda.mapclassify.Quantiles(x, k = 4).bins
+#intermediate_classification = pysal.esda.mapclassify.Fisher_Jenks(x, k = 4).bins
+intermediate_classification = pysal.esda.mapclassify.Jenks_Caspall(x, k = 6).bins.tolist()
+
+from decimal import *
+
+getcontext().prec = 2
+getcontext().rounding = ROUND_UP
+
+upper_values = []
+# Clean list
+for classes in intermediate_classification:
+    if isinstance(classes, list):
+        upper_values.append(classes[0])
+    elif isinstance(classes, str):
+        upper_values.append(classes)
+    else:
+        print "You got en error"
+        break
+
+print upper_values
+
+
+
+
+#ks = pysal.esda.mapclassify.K_classifiers(x)
+"""
+print ks.best.name
+print ks.best.k
+print ks.best.gadf
+
+print ks.results
+"""
+
+
+
+def trunc(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    slen = len('%.*f' % (n, f))
+    return str(f)[:slen]
+
+quantile = [float(trunc(values[0], 2))]
+last_value = float(trunc(upper_values[-1], 2)) + 10**-2
+print last_value
+upper_values[-1] = last_value
+quantile.extend([round(classes, 2) for classes in upper_values])
+
+print
+
+
+
+print quantile
+
 
 # Sort values (useful only if classification function are not launched : they already do it)
 values.sort()
@@ -35,6 +104,8 @@ values.sort()
 
 #print quantile[:-1][1:]
 
+
+"""
 def xBreakValue(classificationMethod, yValues):
     xvalues = []
     for limit in classificationMethod[:-1][1:]:
@@ -75,4 +146,5 @@ plt.figure(6)
 plt.hist(values,bins=20)
 plt.savefig("fig6.png", dpi=150, orientation='landscape', format="png")
 #plt.show()
+"""
 
