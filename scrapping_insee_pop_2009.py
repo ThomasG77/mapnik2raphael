@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from common.urllib2_extended import *
+from urllib2_extended import *
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 
 data_pop_2009_dept = urllibopenwithheaders(url_pop)

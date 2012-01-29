@@ -17,7 +17,7 @@ def describefrenchdepartement(url):
         { "class" : "infobox_v2" }).findNext('p')
     return str(descriptif_dept).replace("/wiki", "http://fr.wikipedia.org/wiki")
 
-from common.urllib2_extended import *
+from urllib2_extended import *
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 cur = conn.cursor()
 from contextlib import closing

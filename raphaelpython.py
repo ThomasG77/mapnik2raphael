@@ -44,9 +44,11 @@ subprocess.call(["python", "scour/scour.py", "-i", "france.svg", "-o", "france_s
 # Parse svg to retrieve "good" SVG path for geometries and also to get vectorized text for labelling
 import svg_parsing
 
+# Download Raphael JS lib
+import download_raphael
+
 # Generate files for Raphael map final demo
 import generateRaphaelResult
-
 
 # TODO
 # Manage wrong letters for Ile de France (exclude some "departements" to replace with "Ile de France") - Play at Mapnik level and with wkt

@@ -44,26 +44,25 @@ import re
 def download_file(url, fileName=None):
     def getFileName(url, req):
         h = req.headers
-        if h.has_key("content-disposition") and h.get("content-disposition")!= None:
-            if 'filename=' in h.get("content-disposition"):
-                fileName = re.findall("filename=(\S+)", h.get("content-disposition"))[-1]
-                fileName = fileName.strip("\"'")
+        file = None;
+        if h.has_key("content-disposition") and h.get("content-disposition")!= None and 'filename=' in h.get("content-disposition"):
+            file = re.findall("filename=(\S+)", h.get("content-disposition"))[-1]
+            file = file.strip("\"'")
         else:
-            fileName = url.split("/")[-1]
-        return fileName
+            file = url.split("/")[-1]
+        return file
     try:
         r = requests.get(url)
         #import ipdb; ipdb.set_trace()
-        fileName = fileName or getFileName(url, r)
+        fileName = getFileName(url, r)
+        if fileName == None:
+            print "You must set a fileName, unable to auto retrieve it"
         with open(fileName, 'wb') as f:
             f.write(r.content)
         return fileName
     except:
         print "You got an error"
         pass
-
-#download_file("http://www.nyaa.eu/?page=download&tid=280022")
-#download_file("http://professionnels.ign.fr/DISPLAY/000/528/175/5281750/GEOFLADept_FR_Corse_AV_L93.zip")
 
 def extract(zipfilepath, extractiondir):
     """"Extract files and dir from zip from zipfilepath to extractiondir

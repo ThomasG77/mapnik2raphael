@@ -4,7 +4,7 @@
 from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 
 # get extent from shp (for mapnik)
-from common.ogr_extent import *
+from ogr_extent import *
 
 # Retrieve extent and projection using gdal
 shp_extent , proj4 = extent_and_proj(sqlitedatabase, sourcetype = 'SQLite')

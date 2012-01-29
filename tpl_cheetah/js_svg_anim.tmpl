@@ -13,10 +13,10 @@
 
 layeranalyse = [
 #for $line in $data[:-1:]
-            {"areaname": "$line['nom_dept'].replace("-","").replace("'","")", "svg": "$line['svg']"},
+            {"areaname": "$line['nom_dept_clean']", "svg": "$line['svg']"},
 #end for
 #for $line in $data[-1::1]
-            {"areaname": "$line['nom_dept'].replace("-","").replace("'","")", "svg": "$line['svg']"}
+            {"areaname": "$line['nom_dept_clean']", "svg": "$line['svg']"}
 #end for
 ];
 

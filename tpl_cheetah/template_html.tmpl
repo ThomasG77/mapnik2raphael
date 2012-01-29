@@ -4,17 +4,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Raphaël - France</title>
-        <link rel="stylesheet" href="demo.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="demo-print.css" type="text/css" media="print">
-        <link rel="stylesheet" href="screen_style.css" type="text/css" media="screen">
-        <script src="raphael.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js_svg_anim.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" href="css/demo.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="css/demo-print.css" type="text/css" media="print">
+        <link rel="stylesheet" href="css/screen_style.css" type="text/css" media="screen">
+        <script src="js/raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/js_svg_anim.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
         <div id="canvas">
             <div id="paper"></div>
 #for $line in $data
-            <div id="$line['nom_dept_clean'].replace("-","").replace("'","")">
+            <div id="$line['nom_dept_clean']">
                 <h2>$line['nom_dept_title']</h2>
                 $line['description_wikipedia']
             </div>
