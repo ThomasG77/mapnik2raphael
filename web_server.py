@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 from spatialite_sqlite import *
 from download_and_zip import *
-from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
 import json
-import os
 
 cur = conn.cursor()
 
@@ -18,7 +17,8 @@ with closing(cur):
         print showdata(cur)
 
     from bottle import route, run, static_file
-    @route('/showdata')
+    #@route('/raw_svg')
+    @route('/raw_svg', method='POST')
     def showdata():
         cur.execute('''SELECT code_dept, substr(upper(nom_dept),1,1) ||
         substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title,
