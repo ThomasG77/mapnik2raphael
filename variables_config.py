@@ -11,6 +11,9 @@ file_pop_csv = "pop_france_depts_2009.txt"
 # url to download raphael js
 url_raphael = "https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael.js"
 
+# url to download raphael js
+url_mustache = "https://github.com/janl/mustache.js/zipball/0.4.0"
+
 # shp and spatialite parameters
 data_url = "http://professionnels.ign.fr/DISPLAY/000/528/175/5281750/GEOFLADept_FR_Corse_AV_L93.zip"
 tablename = "departements"
@@ -42,6 +45,7 @@ import glob
 import os
 import re
 import fnmatch
+import shutil
 
 import sys
 sys.path.append("common")

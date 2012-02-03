@@ -1,40 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-"""
-# Native libs solution
-import urllib2
-import shutil
-import urlparse
-import os
-
-# Deal with header content when available
-# See http://stackoverflow.com/questions/862173/how-to-download-a-file-using-python-in-a-smarter-way
-def download_file(url, fileName=None):
-    def getFileName(url,openUrl):
-        if 'Content-Disposition' in openUrl.info():
-            # If the response has Content-Disposition, try to get filename from it
-            cd = dict(map(
-                lambda x: x.strip().split('=') if '=' in x else (x.strip(),''),
-                str(openUrl.info()).split(';')))
-            if 'filename' in cd:
-                filename = cd['filename'].strip("\"'")
-                if filename: return filename
-        # if no filename was found above, parse it out of the final URL.
-        return os.path.basename(urlparse.urlsplit(openUrl.url)[2])
-
-    r = urllib2.urlopen(urllib2.Request(url))
-    try:
-        fileName = fileName or getFileName(url,r)
-        with open(fileName, 'wb') as f:
-            shutil.copyfileobj(r,f)
-        return fileName
-    except:
-        return None
-    finally:
-        r.close()
-"""
-
 # Requests module solution
 
 import requests

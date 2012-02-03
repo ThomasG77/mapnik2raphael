@@ -7,3 +7,6 @@ from download_and_zip import *
 f = download_file(url_scour)
 extract(f, ".")
 
+# Delete original file
+os.remove(f)
+
