@@ -9,86 +9,71 @@
                 "stroke-linejoin": "round"
             };
 
-function getXMLHttpRequest() {
-	var xhr = null;
+$.ajax({
+      async: false,
+      type: "POST",
+    dataType: "json",
+        url: "raw_svg",
+        success: function(data){
+            colorAnalyse(R, data);
+        }
+});
 
-	if (window.XMLHttpRequest || window.ActiveXObject) {
-		if (window.ActiveXObject) {
-			try {
-				xhr = new ActiveXObject("Msxml2.XMLHTTP");
-			} catch(e) {
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-		} else {
-			xhr = new XMLHttpRequest();
-		}
-	} else {
-		alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
-		return null;
-	}
+$.ajax({
+      async: false,
+      type: "POST",
+    dataType: "json",
+        url: "raw_svg_letters",
+        success: function(data){
+            addLetter(R, data);
+        }
+});
 
-	return xhr;
-}
 
-var xhr = new XMLHttpRequest();
+function showArea(layeranalyse){
+    colorAnalyse(R, layeranalyse);
+};
 
-xhr.open("POST", "raw_svg", true);
-//xhr.open("GET", "raw_svg", true);
-xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-//xhr.send("variable1=truc&variable2=bidule");
-xhr.send(null);
 
-            var france = {};
+function colorAnalyse(raphaelobject, jsonobject) {
 
-layeranalyse = [
-#for $line in $data[:-1:]
-            {"areaname": "$line['nom_dept_clean']", "svg": "$line['svg']"},
-#end for
-#for $line in $data[-1::1]
-            {"areaname": "$line['nom_dept_clean']", "svg": "$line['svg']"}
-#end for
-];
+    var regions = {};
 
-for (i in layeranalyse){
-    france[layeranalyse[i].areaname] = R.path(layeranalyse[i].svg).attr(attr);
-}
+    for (i in jsonobject){
+        regions[jsonobject[i].areaname] = raphaelobject.path(jsonobject[i].svg).attr(attr);
+    }
 
-            var current = null;
-            for (var dept in france) {
-                france[dept].color = Raphael.getColor();
-                (function (st, dept) {
-                    st[0].style.cursor = "pointer";
-                    st[0].onmouseover = function () {
-                        current && france[current].animate({fill: "#BEC1C3", stroke: "#666"}, 500) && (document.getElementById(current).style.display = "");
-                        st.animate({fill: st.color, stroke: "#ccc"}, 500);
-                        st.toFront();
-                        R.safari();
-                        document.getElementById(dept).style.display = "block";
-                        current = dept;
-                    };
-                    st[0].onmouseout = function () {
-                        st.animate({fill: "#BEC1C3", stroke: "#666"}, 500);
-                        st.toBack();
-                        R.safari();
-                    };
-                    if (dept == "ain") {
-                        st[0].onmouseover();
-                    }
-                })(france[dept], dept);
+    var current = null;
+    for (var region in regions) {
+        regions[region].color = Raphael.getColor();
+        (function (st, region) {
+            st[0].style.cursor = "pointer";
+            st[0].onmouseover = function () {
+                current && regions[current].animate({fill: "#BEC1C3", stroke: "#666"}, 500) && (document.getElementById(current).style.display = "");
+                st.animate({fill: st.color, stroke: "#ccc"}, 500);
+                st.toFront();
+                raphaelobject.safari();
+                document.getElementById(region).style.display = "block";
+                current = region;
+            };
+            st[0].onmouseout = function () {
+                st.animate({fill: "#BEC1C3", stroke: "#666"}, 500);
+                st.toBack();
+                raphaelobject.safari();
+            };
+            if (region == "ain") {
+                st[0].onmouseover();
             }
-
-letters = [
-#for $letter in $letters[:-1:]
-            {"svg":"$letter['path']", "x": $letter['x'], "y": $letter['y']},
-#end for
-#for $letter in $letters[-1::1]
-            {"svg":"$letter['path']", "x": $letter['x'], "y": $letter['y']}
-#end for
-];
-
-for (i in letters){
-    R.path(letters[i].svg).translate( letters[i].x, letters[i].y);
+        })(regions[region], region);
+    }
 }
+
+function addLetter(raphaelobject, jsonobject){
+    for (i in jsonobject){
+        raphaelobject.path(jsonobject[i].svg).translate( jsonobject[i].x, jsonobject[i].y);
+    }
+}
+
 
         };
 

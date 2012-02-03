@@ -36,6 +36,18 @@ with closing(cur):
         #print result
         return json.dumps(result)
 
+    @route('/raw_svg_letters', method='POST')
+    def showdataletters():
+        cur.execute('SELECT path as svg, x, y FROM "letters"')
+        fieldnames = [name[0] for name in cur.description]
+        result = []
+        for row in cur.fetchall():
+            rowset = []
+            for field in zip(fieldnames, row):
+                rowset.append(field)
+            result.append(dict(rowset))
+        return json.dumps(result)
+
     @route('/france.html')
     def france():
         return open('france.html', 'r')
