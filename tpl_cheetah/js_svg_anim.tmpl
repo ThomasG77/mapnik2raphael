@@ -40,7 +40,7 @@ function colorAnalyse(raphaelobject, jsonobject) {
     var regions = {};
 
     for (i in jsonobject){
-        regions[jsonobject[i].areaname] = raphaelobject.path(jsonobject[i].svg).attr(attr);
+        regions[jsonobject[i]['nom_dept_clean']] = raphaelobject.path(jsonobject[i].svg).attr(attr);
     }
 
     var current = null;

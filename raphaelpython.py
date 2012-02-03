@@ -25,6 +25,9 @@ import render_cairo_svg_france
 # Download scour and unzip (a python standalone script to clean SVG)
 import download_scour
 
+# Download mustache and unzip (a js templating system)
+import download_mustache_js
+
 # Clean SVG path (No details but solve SVG path problems with Raphael JS)
 import subprocess
 subprocess.call(["python", "scour/scour.py", "-i", "france.svg", "-o", "france_scour.svg"])

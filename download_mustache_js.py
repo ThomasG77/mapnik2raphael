@@ -23,3 +23,5 @@ os.rename(os.path.join(mustachedirtoremove[0], "mustache.js"), "mustache.js")
 # Delete dir now
 shutil.rmtree(mustachedirtoremove[0])
 
+os.chdir("..")
+

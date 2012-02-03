@@ -11,13 +11,14 @@ f = download_file(data_url)
 # Extract ZIP
 extract(f, ".")
 
-# Delete original file
-os.remove(f)
 
 # List files from zip to rename them to lowercase (spatialite and mapnik don't like upper case extension)
 import zipfile
 zip = zipfile.ZipFile(f)
 namelist = zip.namelist()
+
+# Delete original file
+os.remove(f)
 
 for i in namelist:
     rename_case_all_os(i, option ="lower", extension_only = False)
