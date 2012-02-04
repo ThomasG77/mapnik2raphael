@@ -50,8 +50,6 @@ import svg_parsing
 # Download Raphael JS lib
 import download_raphael
 
-# Generate files for Raphael map final demo
-import generateRaphaelResult
 
 # TODO
 # Manage wrong letters for Ile de France (exclude some "departements" to replace with "Ile de France") - Play at Mapnik level and with wkt

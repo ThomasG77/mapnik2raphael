@@ -23,7 +23,7 @@ with closing(cur):
         cur.execute('''SELECT code_dept, substr(upper(nom_dept),1,1) ||
         substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title,
         replace(replace(lower(nom_dept),"-",""),"\'","") as nom_dept_clean,
-        description_wikipedia, svg FROM "departements"''')
+        svg FROM "departements"''')
         fieldnames = [name[0] for name in cur.description]
         #print fieldnames
         result = []
@@ -39,6 +39,19 @@ with closing(cur):
     @route('/raw_svg_letters', method='POST')
     def showdataletters():
         cur.execute('SELECT path as svg, x, y FROM "letters"')
+        fieldnames = [name[0] for name in cur.description]
+        result = []
+        for row in cur.fetchall():
+            rowset = []
+            for field in zip(fieldnames, row):
+                rowset.append(field)
+            result.append(dict(rowset))
+        return json.dumps(result)
+    @route('/attributes', method='POST')
+    def showdataattributes():
+        cur.execute('''SELECT substr(upper(nom_dept),1,1) ||
+        substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title, replace(replace(lower(nom_dept),"-",""),"\'","") as nom_dept_clean,
+        description_wikipedia FROM "departements"''')
         fieldnames = [name[0] for name in cur.description]
         result = []
         for row in cur.fetchall():

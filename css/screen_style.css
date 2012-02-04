@@ -1,0 +1,27 @@
+#canvas {
+    height: 300px;
+    left: 50%;
+    margin: -150px 0 0 -300px;
+    position: absolute;
+    top: 50%;
+    width: 600px;
+}
+#paper {
+    height: 300px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 290px;
+}
+#rightdescription {
+    height: 300px;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 300px;
+}
+h2 {
+    text-align: center;
+}
+

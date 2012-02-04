@@ -1,4 +1,3 @@
-#encoding UTF-8
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
     <head>
@@ -15,16 +14,8 @@
     <body>
         <div id="canvas">
             <div id="paper"></div>
-#for $line in $data
-            <div id="$line['nom_dept_clean']">
-                <h2>$line['nom_dept_title']</h2>
-                $line['description_wikipedia']
+            <div id="rightdescription">
             </div>
-#end for
-## this is a single-line Cheetah comment and won't appear in the output
-#* This is a multi-line comment and won't appear in the output
-   blah, blah, blah
-*#
         </div>
         <p id="copy">Demo of <a href="http://raphaeljs.com/">Raphael</a>JavaScript Vector Library</p>
     </body>
