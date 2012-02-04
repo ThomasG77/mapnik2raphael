@@ -25,7 +25,7 @@ col_analyse = "density2009"
 #col_analyse = "pop2009"
 
 # List of pattern for file cleaning
-patterns_list = ['*.pyc', 'departement.*', 'fig*.png', 'limite_departement.*', '*.zip', 'france.sqlite', 'pop_france_depts_2009.txt', '*.svg', '*.index']
+patterns_list = ['*.pyc', 'departement.*', 'fig*.png', 'limite_departement.*', '*.zip', 'france.sqlite', 'pop_france_depts_2009.txt', '*.svg', '*.index', 'raphael.js', 'mustache.js']
 dirs_to_delete = ['scour']
 
 # db import
