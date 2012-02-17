@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+
+from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
+from urllib2_extended import *
+cur = conn.cursor()
+from contextlib import closing
+
 def rreplace(s, old, new, occurrence):
     li = s.rsplit(old, occurrence)
     return new.join(li)
@@ -13,14 +19,10 @@ def describefrenchdepartement(url):
     """
     data_dept = urllibopenwithheaders(url)
     soup_dept = BeautifulSoup(data_dept)
-    descriptif_dept = soup_dept.find("table",
-        { "class" : "infobox_v2" }).findNext('p')
-    return str(descriptif_dept).replace("/wiki", "http://fr.wikipedia.org/wiki")
-
-from urllib2_extended import *
-from variables_config import * # Contains shared variables (See http://docs.python.org/faq/programming.html#how-do-i-share-global-variables-across-modules)
-cur = conn.cursor()
-from contextlib import closing
+    descriptif_dept = soup_dept.find("table", { "class" : "infobox_v2" }).findNext('p')
+    if (descriptif_dept.text == u""):
+        descriptif_dept = soup_dept.find("table", { "class" : "infobox_v2" }).findNext('p').findNext('p')
+    return str(descriptif_dept).replace("/wiki/", "http://fr.wikipedia.org/wiki/")
 
 with closing(cur):
 
