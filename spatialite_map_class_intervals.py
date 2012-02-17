@@ -5,7 +5,7 @@ from variables_config import * # Contains shared variables (See http://docs.pyth
 cur = conn.cursor()
 
 with closing(cur):
-    print tablename
+    #print tablename
     cur.execute('SELECT ' + col_analyse + ' FROM "' + tablename + '"')
 
 
@@ -24,13 +24,13 @@ from class_intervals import quantile, equal, pretty, std_dev, jenks
 class_number = 4
 quantile, equal_interval, r_pretty, std_dev, jenks = quantile(values, class_number), equal(values, class_number), pretty(values, class_number), std_dev(values, class_number), jenks(values, classes=class_number)
 
-
+"""
 print "Equal Interval: ", equal_interval, len(equal_interval) - 1
 print "Quantile: ", quantile, len(quantile) - 1
 print "Natural Breaks (Jenks): ", jenks, len(jenks) - 1
 print "R's Pretty: ", r_pretty, len(r_pretty) - 1
 print "Standard Deviation: ", std_dev, len(std_dev) - 1
-
+"""
 
 import numpy as np
 import pysal
@@ -64,7 +64,7 @@ for classes in intermediate_classification:
         print "You got en error"
         break
 
-print upper_values
+#print upper_values
 
 
 
@@ -78,8 +78,6 @@ print ks.best.gadf
 print ks.results
 """
 
-
-
 def trunc(f, n):
     '''Truncates/pads a float f to n decimal places without rounding'''
     slen = len('%.*f' % (n, f))
@@ -87,15 +85,10 @@ def trunc(f, n):
 
 quantile = [float(trunc(values[0], 2))]
 last_value = float(trunc(upper_values[-1], 2)) + 10**-2
-print last_value
 upper_values[-1] = last_value
 quantile.extend([round(classes, 2) for classes in upper_values])
 
-print
-
-
-
-print quantile
+#print quantile
 
 
 # Sort values (useful only if classification function are not launched : they already do it)
