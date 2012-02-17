@@ -5,16 +5,13 @@ from variables_config import * # Contains shared variables (See http://docs.pyth
 from spatialite_sqlite import *
 from download_and_zip import *
 import json
+from pysal_spatialite_map_class import quantile
+
+#print quantile
 
 cur = conn.cursor()
 
 with closing(cur):
-
-    html = showquery(cur, 'SELECT code_dept, substr(upper(nom_dept),1,1) || substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title, replace(replace(lower(nom_dept),"-",""),"\'","") as nom_dept_clean, description_wikipedia, svg FROM "departements"')
-
-    def executecgi(cur):
-        print "Content-Type: application/json\n"
-        print showdata(cur)
 
     from bottle import route, run, static_file
     #@route('/raw_svg')
@@ -50,8 +47,9 @@ with closing(cur):
     @route('/attributes', method='POST')
     def showdataattributes():
         cur.execute('''SELECT substr(upper(nom_dept),1,1) ||
-        substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title, replace(replace(lower(nom_dept),"-",""),"\'","") as nom_dept_clean,
-        description_wikipedia FROM "departements"''')
+        substr(lower(nom_dept),-length(nom_dept)+1) as nom_dept_title,
+        replace(replace(lower(nom_dept),"-",""),"\'","") as nom_dept_clean,
+        density2009, description_wikipedia FROM "departements"''')
         fieldnames = [name[0] for name in cur.description]
         result = []
         for row in cur.fetchall():
@@ -60,10 +58,17 @@ with closing(cur):
                 rowset.append(field)
             result.append(dict(rowset))
         return json.dumps(result)
+    @route('/classification', method='POST')
+    def showclassification():
+        return json.dumps({'classquantile': quantile})
 
     @route('/france.html')
     def france():
         return open('france.html', 'r')
+
+    @route('/favicon.ico')
+    def favicon():
+        return static_file('favicon.ico', './')
 
     @route('/css/<filename:path>')
     def send_static(filename):
