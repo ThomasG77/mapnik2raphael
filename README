@@ -1,13 +1,19 @@
-# This project depend from mapnik 2, spatialite, matplotlib, beautifulsoup and cheetah (for
-# this last one use https://github.com/cheetahtemplate/cheetah and not defaut
-# bundle)
-# It was tested with python 2.6 on Linux 10.04
+# This project depend from mapnik 2, spatialite, bottle and beautifulsoup (optionnally, matplotlib)
+# Beautifulsoup is only used to retrieve wikipedia content for demo purpose
+# The demo was tested with python 2.6 on Linux 10.04
 
 # Do
 
-python raphaelpython.py
+python raphaelpython.py to retrieve data, generate map, parse to svg raphael can consume.
+
+# Launch the webserver
+python web_server.py
 
 # At the end of the process, open
 
-firefox france.html
+firefox http://localhost:8000/france.html
+
+The interactivity isn't well configurated.
+The main advantage of the way we generate svg is the fact, we rely on Mapnik rendering engine to put labels and we're able to take any input ogr/gdal accept.
+
 
