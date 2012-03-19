@@ -9,11 +9,13 @@ python raphaelpython.py to retrieve data, generate map, parse to svg raphael can
 # Launch the webserver
 python web_server.py
 
-# At the end of the process, open
+# Open your browser
 
 firefox http://localhost:8000/france.html
 
-The interactivity isn't well configurated.
-The main advantage of the way we generate svg is the fact, we rely on Mapnik rendering engine to put labels and we're able to take any input ogr/gdal accept.
+The interactivity isn't well configurated at the moment.
+
+The main advantage of the way we generate svg is the fact, we rely on Mapnik
+rendering engine to put labels and we're able to take any input ogr/gdal accept.
 
 
